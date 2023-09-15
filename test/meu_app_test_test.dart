@@ -1,8 +1,11 @@
+import 'package:meu_app_test/classes/viacep.dart';
 import 'package:meu_app_test/meu_app_test.dart';
+import 'package:mockito/annotations.dart';
+import 'package:mockito/mockito.dart';
 import 'package:test/test.dart';
 
+@GenerateMocks([MockViaCep])
 void main() {
-
   group('Calcula desconto de valor', () {
     var valuesToTest = {
       {"valor": 1000, "desconto": 150, "percentual": false}: 850,
@@ -52,4 +55,13 @@ void main() {
   test('Verifica se numero não é 50', () {
     expect(retornaNum(50), isNot(49));
   });
+
+  test('Verifica informações cep', () async {
+    ViaCep viaCep = ViaCep();
+    var body = await viaCep.retornaCep('01001000');
+    expect(body["bairro"], equals("Sé"));
+    expect(body["logradouro"], equals("Praça da Sé"));
+  });
 }
+
+class MockViaCep extends Mock implements ViaCep {}
