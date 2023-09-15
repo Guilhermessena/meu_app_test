@@ -4,6 +4,8 @@ import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 import 'package:test/test.dart';
 
+import 'meu_app_test_test.mocks.dart';
+
 @GenerateMocks([MockViaCep])
 void main() {
   group('Calcula desconto de valor', () {
@@ -57,8 +59,22 @@ void main() {
   });
 
   test('Verifica informações cep', () async {
-    ViaCep viaCep = ViaCep();
-    var body = await viaCep.retornaCep('01001000');
+    MockMockViaCep mockMockViaCep = MockMockViaCep();
+    when(mockMockViaCep.retornaCep('01001000'))
+        .thenAnswer((realInvocation) => Future.value({
+              "cep": "01001-000",
+              "logradouro": "Praça da Sé",
+              "complemento": "lado ímpar",
+              "bairro": "Sé",
+              "localidade": "São Paulo",
+              "uf": "SP",
+              "ibge": "3550308",
+              "gia": "1004",
+              "ddd": "11",
+              "siafi": "7107"
+            }));
+
+    var body = await mockMockViaCep.retornaCep('01001000');
     expect(body["bairro"], equals("Sé"));
     expect(body["logradouro"], equals("Praça da Sé"));
   });
