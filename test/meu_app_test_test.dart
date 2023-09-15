@@ -29,4 +29,38 @@ void main() {
     expect(() => calcularDesconto(1000, 0, true),
         throwsA(TypeMatcher<ArgumentError>()));
   });
+
+  group('Calcula desconto de valor', () {
+    var valuesToTest = {
+      {"valor": 1000, "desconto": 150, "percentual": false}: 850,
+      {"valor": 1000, "desconto": 15, "percentual": true}: 850,
+    };
+    valuesToTest.forEach((values, expected) {
+      test('Entrada: $values - Esperado: $expected', () {
+        expect(
+            calcularDesconto(
+                double.parse(values["valor"].toString()),
+                double.parse(values["desconto"].toString()),
+                values["percentual"] == true),
+            equals(expected));
+      });
+    });
+  });
+
+  group('Calcula desconto de valor com valores zerados', () {
+    var valuesToTest = {
+      {"valor": 0, "desconto": 150, "percentual": false},
+      {"valor": 1000, "desconto": 0, "percentual": true},
+    };
+    for (var values in valuesToTest) {
+      test('Entrada: $values', () {
+        expect(
+            () => calcularDesconto(
+                double.parse(values["valor"].toString()),
+                double.parse(values["desconto"].toString()),
+                values["percentual"] == true),
+            equals(throwsA(TypeMatcher<ArgumentError>())));
+      });
+    }
+  });
 }
