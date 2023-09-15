@@ -2,33 +2,6 @@ import 'package:meu_app_test/meu_app_test.dart';
 import 'package:test/test.dart';
 
 void main() {
-  test('Calcula desconto de valor sem percentual', () {
-    expect(calcularDesconto(1000, 150, false), 850);
-  });
-
-  test('Calcula desconto de valor com percentual', () {
-    expect(calcularDesconto(1000, 15, true), 850);
-  });
-
-  test('Calcula desconto de valor sem percentual com valor zerado', () {
-    expect(() => calcularDesconto(0, 150, false),
-        throwsA(TypeMatcher<ArgumentError>()));
-  });
-
-  test('Calcula desconto de valor com percentual com valor zerado', () {
-    expect(() => calcularDesconto(0, 150, true),
-        throwsA(TypeMatcher<ArgumentError>()));
-  });
-
-  test('Calcula desconto de valor sem percentual com desconto zerado', () {
-    expect(() => calcularDesconto(1000, 0, false),
-        throwsA(TypeMatcher<ArgumentError>()));
-  });
-
-  test('Calcula desconto de valor com percentual com desconto zerado', () {
-    expect(() => calcularDesconto(1000, 0, true),
-        throwsA(TypeMatcher<ArgumentError>()));
-  });
 
   group('Calcula desconto de valor', () {
     var valuesToTest = {
@@ -62,5 +35,21 @@ void main() {
             equals(throwsA(TypeMatcher<ArgumentError>())));
       });
     }
+  });
+
+  test('Conversão para UpperCase', () {
+    expect(convertUpperCase("dio"), equals("DIO"));
+  });
+
+  test('Verifica numero acima de 50', () {
+    expect(retornaNum(50), greaterThan(49));
+  });
+
+  test('Começa com', () {
+    expect(convertUpperCase("dio"), startsWith("D"));
+  });
+
+  test('Verifica se numero não é 50', () {
+    expect(retornaNum(50), isNot(49));
   });
 }

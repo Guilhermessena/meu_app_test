@@ -11,3 +11,7 @@ double calcularDesconto(double valor, double desconto, bool percentual) {
     return valor - desconto;
   }
 }
+
+String convertUpperCase(String texto) => texto.toUpperCase();
+
+double retornaNum(double num) => num;
